@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thiệp Giáng Sinh - P.E.Crew</title>
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f4f4f9;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+        padding: 20px;
+        box-sizing: border-box;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .card-container {
+        background-color: #ffffff;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        width: 100%;
+        max-width: 600px;
+        text-align: center;
+        padding: 40px 30px;
+        border: 5px solid #c82333;
+        position: relative;
+        overflow: hidden;
+        z-index: 1;
+    }
+
+    .header {
+        color: #c82333;
+        font-size: 2.5em;
+        margin-bottom: 10px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-weight: bold;
+    }
+
+    .header span {
+        color: #155724;
+    }
+
+    .message {
+        color: #333;
+        font-size: 1.1em;
+        line-height: 1.6;
+        margin: 20px 0 30px;
+        text-align: justify;
+        text-align-last: center;
+    }
+
+    .recipient-group {
+        margin-top: 25px;
+        padding-top: 15px;
+        border-top: 1px dashed #ccc;
+        color: #555;
+        font-size: 0.95em;
+    }
+
+    .signature {
+        margin-top: 30px;
+        font-style: italic;
+        color: #c82333;
+        font-weight: 600;
+        font-size: 1.2em;
+    }
+
+    .icon {
+        font-size: 1.5em;
+        margin: 0 5px;
+        color: #155724;
+    }
+
+    button {
+        padding: 12px 30px;
+        font-size: 1em;
+        border: none;
+        border-radius: 10px;
+        background: #e74c3c;
+        color: #fff;
+        cursor: pointer;
+        margin-top: 20px;
+        transition: 0.3s;
+    }
+
+    button:hover {
+        transform: scale(1.05);
+        background: #c0392b;
+    }
+
+    /* Lá thư popup */
+    .letter {
+        position: absolute;
+        width: 0;
+        height: 0;
+        background: #fff8e7;
+        border-radius: 15px;
+        box-shadow: 0 0 30px rgba(0,0,0,0.5);
+        padding: 30px;
+        text-align: center;
+        opacity: 0;
+        overflow: hidden;
+        transition: all 1s ease;
+        z-index: 1000;
+    }
+
+    .letter.show {
+        width: 450px;
+        max-width: 90%;
+        height: auto;
+        opacity: 1;
+    }
+
+    .letter h1 {
+        font-family: 'Playfair Display', serif;
+        font-size: 2em;
+        color: #c0392b;
+        margin-bottom: 10px;
+    }
+
+    .letter h2 {
+        color: #2980b9;
+        margin-bottom: 15px;
+    }
+
+    .letter p {
+        color: #2c3e50;
+        margin: 5px 0;
+        line-height: 1.4;
+    }
+
+    .letter .signature {
+        margin-top: 15px;
+        font-style: italic;
+        color: #c0392b;
+    }
+
+    /* Tuyết rơi */
+    .snowflake {
+        color: #fff;
+        font-size: 1em;
+        position: absolute;
+        top: -20px;
+        animation: fall linear infinite;
+        text-shadow: 0 0 5px #000;
+    }
+
+    @keyframes fall {
+        to { transform: translateY(100vh); }
+    }
+</style>
+</head>
+<body>
+
+<div class="card-container">
+    <div class="header">
+        <span class="icon">❄️</span> MERRY <span>CHRISTMAS</span> <span class="icon">🎁</span>
+    </div>
+    
+    <button id="openBtn">🎄 Mở lá thư Giáng Sinh 🎄</button>
+</div>
+
+<div class="letter" id="letter">
+    <h1>Chúc Mừng Giáng Sinh!</h1>
+    <h2>Cao đẳng FPT Polytechnic</h2>
+    <p>Chúc thầy cô và các bạn một mùa Giáng Sinh an lành,</p>
+    <p>Ngập tràn niềm vui và hạnh phúc,</p>
+    <p>Năm mới nhiều thành công và may mắn,</p>
+    <p>Luôn tràn đầy sức khỏe và năng lượng tích cực,</p>
+    <p>Và thật nhiều kỷ niệm đáng nhớ cùng P.E.Crew!</p>
+    <p class="signature">Trân trọng, P.E.Crew</p>
+</div>
+
+<script>
+const cardContainer = document.querySelector('.card-container');
+const letter = document.getElementById('letter');
+const openBtn = document.getElementById('openBtn');
+const snowChars = ['❅', '❆', '❄️', '⭐'];
+
+// Tạo tuyết rơi liên tục
+function createSnowflake() {
+    const snowflake = document.createElement('div');
+    snowflake.className = 'snowflake';
+    snowflake.innerHTML = snowChars[Math.floor(Math.random() * snowChars.length)];
+    snowflake.style.left = Math.random() * 100 + 'vw';
+    snowflake.style.animationDuration = (Math.random() * 3 + 5) + 's';
+    snowflake.style.opacity = Math.random();
+    snowflake.style.fontSize = (Math.random() * 0.5 + 0.8) + 'em';
+    document.body.appendChild(snowflake);
+
+    setTimeout(() => { snowflake.remove(); }, 8000);
+}
+
+setInterval(createSnowflake, 300);
+
+// Mở thư
+openBtn.addEventListener('click', () => {
+    letter.classList.add('show');
+    openBtn.style.display = 'none';
+});
+</script>
+
+</body>
+</html>
